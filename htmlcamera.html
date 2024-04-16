@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Photo Booth</title>
+<style>
+    #gallery img {
+        width: 100px;
+        height: auto;
+        margin: 5px;
+    }
+    video, #gallery {
+        display: block;
+        margin: 0 auto;
+    }
+</style>
+</head>
+<body>
+<video id="video" width="640" height="480" autoplay></video>
+<button id="snap">Snap Photo</button>
+<div id="gallery"></div>
+
+<script>
+    const video = document.getElementById('video');
+    const canvas = document.createElement('canvas');
+    const gallery = document.getElementById('gallery');
+
+    // Get access to the camera
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function(stream) {
+                video.srcObject = stream;
+                video.play();
+            })
+            .catch(function(error) {
+                console.error("Error accessing the camera: ", error);
+            });
+    } else {
+        alert('getUserMedia not supported on your browser!');
+    }
+
+    document.getElementById('snap').addEventListener('click', function() {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+        const image = new Image();
+        image.src = canvas.toDataURL('image/png');
+        gallery.appendChild(image);
+    });
+</script>
+</body>
+</html>
