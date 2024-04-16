@@ -4,14 +4,49 @@
 <meta charset="UTF-8">
 <title>Photo Booth</title>
 <style>
+    body {
+        background-color: #d78a76; /* Light red background */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+    }
+    #video {
+        border: 5px solid white; /* White border for video element */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.5); /* Shadow for depth */
+    }
+    #gallery {
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
     #gallery img {
         width: 100px;
         height: auto;
         margin: 5px;
+        border: 3px solid white; /* White border for images */
+        box-shadow: 0 2px 4px rgba(0,0,0,0.5); /* Consistent styling with video */
     }
-    video, #gallery {
-        display: block;
-        margin: 0 auto;
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 10px;
+        cursor: pointer;
+        background-color: white;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+        transition: background-color 0.3s, transform 0.3s;
+    }
+    button:hover {
+        background-color: #f0e2de; /* Lighter tone for interactive element */
+        transform: translateY(-2px);
+    }
+    button:active {
+        transform: translateY(1px);
     }
 </style>
 </head>
@@ -36,17 +71,4 @@
                 console.error("Error accessing the camera: ", error);
             });
     } else {
-        alert('getUserMedia not supported on your browser!');
-    }
-
-    document.getElementById('snap').addEventListener('click', function() {
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-        const image = new Image();
-        image.src = canvas.toDataURL('image/png');
-        gallery.appendChild(image);
-    });
-</script>
-</body>
-</html>
+        alert('getUserMedia not supported on
